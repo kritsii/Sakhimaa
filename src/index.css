@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-warm-beige: #F7F1E8;
+  --color-cream: #FFF9F1;
+  --color-dusty-rose: #D98F96;
+  --color-dusty-rose-dark: #C67981;
+  --color-peach: #F4B49B;
+  --color-peach-light: #FCECE5;
+  --color-sage: #A8BCA1;
+  --color-sage-light: #EEF4EC;
+  --color-lavender: #C7B8DD;
+  --color-lavender-light: #F4F0FA;
+  --color-warm-brown: #45362F;
+  --color-warm-brown-light: #705B51;
+  --color-warm-brown-muted: #9E8B81;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+:root {
+  --bg-primary: #F7F1E8;
+  --bg-cream: #FFF9F1;
+  --text-primary: #45362F;
+  --color-rose: #D98F96;
+  --color-peach: #F4B49B;
+  --color-sage: #A8BCA1;
+  --color-lavender: #C7B8DD;
+}
+
+body {
+  background-color: #F7F1E8;
+  color: #45362F;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Custom soft scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F1E8;
+}
+::-webkit-scrollbar-thumb {
+  background: #E3D3C1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D98F96;
+}
+
+/* Organic blobs & backdrop glows */
+.organic-shape {
+  border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+}
+
+.organic-shape-2 {
+  border-radius: 41% 59% 47% 53% / 44% 45% 55% 56%;
+}
+
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.8deg);
+  }
+}
+
+@keyframes softPulse {
+  0%, 100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+.animate-gentle-float {
+  animation: gentleFloat 6s ease-in-out infinite;
+}
+
+.animate-soft-pulse {
+  animation: softPulse 4s ease-in-out infinite;
+}
