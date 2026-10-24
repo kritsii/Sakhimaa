@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  X, 
-  Check, 
-  Sparkles, 
-  ArrowRight, 
-  ShieldCheck, 
-  Mail, 
-  Lock, 
-  User, 
-  Eye, 
-  EyeOff, 
-  AlertCircle 
+import {
+  X,
+  Check,
+  Sparkles,
+  ArrowRight,
+  ShieldCheck,
+  Mail,
+  Lock,
+  User,
+  Eye,
+  EyeOff,
+  AlertCircle
 } from 'lucide-react';
 import { signup, login } from '../api/auth';
 
-export default function GetStartedModal({ 
-  isOpen, 
-  onClose, 
-  initialJourney = 'pregnant', 
-  onAuthSuccess 
+export default function GetStartedModal({
+  isOpen,
+  onClose,
+  initialJourney = 'pregnant',
+  onAuthSuccess
 }) {
   const [mode, setMode] = useState('signup'); // 'signup' | 'login' | 'forgot'
   const [showPassword, setShowPassword] = useState(false);
@@ -164,13 +164,13 @@ export default function GetStartedModal({
 
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#45362F]/45 backdrop-blur-sm animate-fadeIn"
       role="dialog"
       aria-modal="true"
       aria-labelledby="auth-modal-title"
     >
-      <div 
+      <div
         className="relative w-full max-w-md sm:max-w-lg bg-[#FFF9F1] rounded-3xl border-2 border-[#EADFCF] shadow-2xl p-6 sm:p-8 overflow-hidden text-[#45362F] transition-all max-h-[92vh] overflow-y-auto"
       >
         {/* Decorative soft gradient blobs */}
@@ -209,22 +209,20 @@ export default function GetStartedModal({
             <button
               type="button"
               onClick={() => setMode('login')}
-              className={`flex-1 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all cursor-pointer ${
-                mode === 'login'
-                  ? 'bg-white text-[#45362F] shadow-sm'
-                  : 'text-[#705B51] hover:text-[#45362F]'
-              }`}
+              className={`flex-1 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all cursor-pointer ${mode === 'login'
+                ? 'bg-white text-[#45362F] shadow-sm'
+                : 'text-[#705B51] hover:text-[#45362F]'
+                }`}
             >
               Sign In
             </button>
             <button
               type="button"
               onClick={() => setMode('signup')}
-              className={`flex-1 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all cursor-pointer ${
-                mode === 'signup'
-                  ? 'bg-[#D98F96] text-white shadow-sm'
-                  : 'text-[#705B51] hover:text-[#45362F]'
-              }`}
+              className={`flex-1 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all cursor-pointer ${mode === 'signup'
+                ? 'bg-[#D98F96] text-white shadow-sm'
+                : 'text-[#705B51] hover:text-[#45362F]'
+                }`}
             >
               Sign Up
             </button>
@@ -257,7 +255,7 @@ export default function GetStartedModal({
             {/* 1. SIGN IN FORM */}
             {mode === 'login' && (
               <form onSubmit={handleLoginSubmit} className="space-y-4">
-                
+
                 {/* Email Field */}
                 <div>
                   <label className="block text-xs font-semibold uppercase text-[#45362F] mb-1.5">
@@ -339,7 +337,7 @@ export default function GetStartedModal({
             {/* 2. SIGN UP FORM */}
             {mode === 'signup' && (
               <form onSubmit={handleSignupSubmit} className="space-y-4">
-                
+
                 {/* Full Name */}
                 <div>
                   <label className="block text-xs font-semibold uppercase text-[#45362F] mb-1.5">
@@ -385,11 +383,10 @@ export default function GetStartedModal({
                     <button
                       type="button"
                       onClick={() => setJourney('pregnant')}
-                      className={`p-3 rounded-2xl text-left border cursor-pointer transition-all ${
-                        journey === 'pregnant'
-                          ? 'bg-[#FCECE5] border-2 border-[#D98F96] shadow-xs'
-                          : 'bg-white border-[#EADFCF] hover:bg-[#FCECE5]/30'
-                      }`}
+                      className={`p-3 rounded-2xl text-left border cursor-pointer transition-all ${journey === 'pregnant'
+                        ? 'bg-[#FCECE5] border-2 border-[#D98F96] shadow-xs'
+                        : 'bg-white border-[#EADFCF] hover:bg-[#FCECE5]/30'
+                        }`}
                     >
                       <span className="block font-serif font-bold text-xs sm:text-sm text-[#45362F]">
                         I&apos;m Pregnant
@@ -402,11 +399,10 @@ export default function GetStartedModal({
                     <button
                       type="button"
                       onClick={() => setJourney('postnatal')}
-                      className={`p-3 rounded-2xl text-left border cursor-pointer transition-all ${
-                        journey === 'postnatal'
-                          ? 'bg-[#EEF4EC] border-2 border-[#5F7C58] shadow-xs'
-                          : 'bg-white border-[#EADFCF] hover:bg-[#EEF4EC]/30'
-                      }`}
+                      className={`p-3 rounded-2xl text-left border cursor-pointer transition-all ${journey === 'postnatal'
+                        ? 'bg-[#EEF4EC] border-2 border-[#5F7C58] shadow-xs'
+                        : 'bg-white border-[#EADFCF] hover:bg-[#EEF4EC]/30'
+                        }`}
                     >
                       <span className="block font-serif font-bold text-xs sm:text-sm text-[#45362F]">
                         I&apos;ve Delivered

@@ -1,11 +1,11 @@
 import React from 'react';
-import { 
-  HeartPulse, 
-  ClipboardList, 
-  Pill, 
-  HeartHandshake, 
-  Baby, 
-  Flower2, 
+import {
+  HeartPulse,
+  ClipboardList,
+  Pill,
+  HeartHandshake,
+  Baby,
+  Flower2,
   ArrowRight
 } from 'lucide-react';
 
@@ -68,23 +68,23 @@ export default function PostnatalSection({ onSwitchToPregnancy }) {
   ];
 
   return (
-    <section 
-      id="postnatal-section" 
+    <section
+      id="postnatal-section"
       className="py-16 md:py-24 bg-gradient-to-b from-[#F7F1E8] via-[#F4F8F3] to-[#F7F1E8] relative overflow-hidden transition-all duration-300 border-t border-[#EADFCF]"
       aria-label="Postnatal Care Section"
     >
       {/* Decorative ambient gradients */}
-      <div 
-        className="absolute top-1/4 -left-24 w-88 h-88 bg-[#A8BCA1]/15 rounded-full blur-3xl pointer-events-none" 
+      <div
+        className="absolute top-1/4 -left-24 w-88 h-88 bg-[#A8BCA1]/15 rounded-full blur-3xl pointer-events-none"
         aria-hidden="true"
       />
-      <div 
-        className="absolute bottom-10 -right-20 w-80 h-80 bg-[#C7B8DD]/15 rounded-full blur-3xl pointer-events-none" 
+      <div
+        className="absolute bottom-10 -right-20 w-80 h-80 bg-[#C7B8DD]/15 rounded-full blur-3xl pointer-events-none"
         aria-hidden="true"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Top Control Bar: Active Badge, Switcher & Hide Button */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 pb-5 border-b border-[#EADFCF]/70">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EEF4EC] text-[#5F7C58] text-xs font-semibold uppercase tracking-wider shadow-xs">
@@ -127,7 +127,7 @@ export default function PostnatalSection({ onSwitchToPregnancy }) {
                 className={`group relative bg-[#FFFDF9] rounded-[22px] p-7 sm:p-8 border border-[#EADFCF]/80 shadow-xs flex flex-col justify-start transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg ${feature.hoverBorder}`}
               >
                 {/* Pastel Circular Icon Container */}
-                <div 
+                <div
                   className={`w-14 h-14 rounded-full flex items-center justify-center mb-6 shrink-0 transition-transform duration-300 group-hover:scale-105 ${feature.iconBg} ${feature.iconColor}`}
                   aria-hidden="true"
                 >

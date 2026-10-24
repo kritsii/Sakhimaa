@@ -12,10 +12,10 @@ export default function Footer({ onSelectJourney }) {
   return (
     <footer className="bg-[#F7F1E8] border-t border-[#EADFCF] pt-16 pb-12 text-[#45362F]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        
+
         {/* Top Grid: Brand & Links */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-          
+
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
