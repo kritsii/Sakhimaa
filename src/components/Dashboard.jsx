@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Check } from 'lucide-react';
+import { Check, ArrowLeft } from 'lucide-react';
 import DashboardHeader from './dashboard/DashboardHeader';
 import PersonalizedWelcome from './dashboard/PersonalizedWelcome';
 import MomentForYou from './dashboard/MomentForYou';
 import HealthcareFeaturesGrid from './dashboard/HealthcareFeaturesGrid';
 import FeaturePlaceholderView from './dashboard/FeaturePlaceholderView';
 import DateSettingsModal from './dashboard/DateSettingsModal';
+import SymptomTracker from './SymptomTracker';
+import MedicationTracker from './MedicationTracker';
 import { updateUserProfileStorage } from '../utils/dashboardStorage';
 import { 
   createDynamicDueDate, 
@@ -72,6 +74,14 @@ export default function Dashboard({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const isSymptomTracker = 
+    selectedFeature?.routeConstant === 'PREGNANCY_SYMPTOMS' || 
+    selectedFeature?.routeConstant === 'POSTNATAL_RECOVERY';
+
+  const isMedicationTracker = 
+    selectedFeature?.routeConstant === 'PREGNANCY_MEDICATIONS' || 
+    selectedFeature?.routeConstant === 'POSTNATAL_MEDICATIONS';
+
   return (
     <div className="min-h-screen bg-[#F7F1E8] text-[#45362F] flex flex-col selection:bg-[#F08070]/30 selection:text-[#45362F] relative font-sans">
       
@@ -127,12 +137,60 @@ export default function Dashboard({
           </div>
         )}
 
-        {/* VIEW 2: Dedicated Feature Integration Placeholder View */}
+        {/* VIEW 2: Dedicated Feature Views */}
         {currentView === 'feature' && (
-          <FeaturePlaceholderView
-            feature={selectedFeature}
-            onBackToDashboard={handleBackToDashboard}
-          />
+          <div className="animate-fadeIn">
+            {isSymptomTracker ? (
+              <div className="max-w-4xl mx-auto space-y-6">
+                <div className="flex items-center justify-between pb-3 border-b border-[#EADFCF]">
+                  <button
+                    onClick={handleBackToDashboard}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-[#45362F] bg-white border border-[#EADFCF] hover:border-[#559C91] hover:text-[#559C91] shadow-xs cursor-pointer transition-all"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Back to Dashboard</span>
+                  </button>
+
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#EEF4EC] text-[#559C91] border border-[#559C91]/30">
+                    {selectedFeature?.routeConstant === 'POSTNATAL_RECOVERY'
+                      ? "Mother's Recovery Tracker"
+                      : 'Pregnancy Symptom Tracker'}
+                  </span>
+                </div>
+
+                <SymptomTracker
+                  initialJourney={
+                    selectedFeature?.routeConstant === 'POSTNATAL_RECOVERY'
+                      ? 'postnatal'
+                      : 'pregnant'
+                  }
+                />
+              </div>
+            ) : isMedicationTracker ? (
+              <div className="max-w-4xl mx-auto space-y-6">
+                <div className="flex items-center justify-between pb-3 border-b border-[#EADFCF]">
+                  <button
+                    onClick={handleBackToDashboard}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-[#45362F] bg-white border border-[#EADFCF] hover:border-[#559C91] hover:text-[#559C91] shadow-xs cursor-pointer transition-all"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Back to Dashboard</span>
+                  </button>
+
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#FDF0E6] text-[#E07A5F] border border-[#E07A5F]/30">
+                    Medication Tracker
+                  </span>
+                </div>
+
+                <MedicationTracker />
+              </div>
+            ) : (
+              <FeaturePlaceholderView
+                feature={selectedFeature}
+                onBackToDashboard={handleBackToDashboard}
+              />
+            )}
+          </div>
         )}
 
       </main>
