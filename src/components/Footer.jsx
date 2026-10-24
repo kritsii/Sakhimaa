@@ -19,8 +19,8 @@ export default function Footer({ onSelectJourney }) {
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#F4B49B] to-[#D98F96] flex items-center justify-center text-white shadow-sm">
-                <Heart className="w-5 h-5 fill-white stroke-white" />
+              <div className="w-11 h-11 rounded-2xl bg-[#FFF9F1] border border-[#EADFCF] p-1.5 flex items-center justify-center shadow-xs">
+                <img src="/logo.png" alt="SakhiMaa Logo" className="w-full h-full object-contain" />
               </div>
               <div>
                 <span className="font-serif text-2xl font-bold tracking-tight text-[#45362F]">
