@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Baby, BookOpen, Info, Plus, ShieldAlert, Trash2 } from 'lucide-react';
+import { Baby, BookOpen, Info, Plus, ShieldAlert, Trash2 } from 'lucide-react';
 import ThemedDropdown from './ThemedDropdown';
+import FeatureTip from './FeatureTip';
 
 const STORAGE_KEY_PREFIX = 'sakhimaa-newborn-care-';
 const LOG_TYPES = ['Feeding', 'Diaper', 'Sleep', 'Appointment', 'Note'];
@@ -115,27 +116,13 @@ export default function NewbornCare({ userId, onBackToDashboard }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex items-center justify-between gap-3 border-b border-[#EADFCF] pb-3">
-        <button
-          type="button"
-          onClick={onBackToDashboard}
-          className="inline-flex items-center gap-2 rounded-full border border-[#EADFCF] bg-white px-4 py-2 text-sm font-semibold text-[#45362F] shadow-xs transition-colors hover:border-[#559C91] hover:text-[#559C91] focus:outline-none focus:ring-2 focus:ring-[#559C91] cursor-pointer"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          <span>Back to Dashboard</span>
-        </button>
-        <span className="rounded-full border border-[#5F7C58]/30 bg-[#EEF4EC] px-3 py-1 text-xs font-semibold text-[#4D6947]">
-          Newborn care
-        </span>
-      </div>
-
-      <section className="rounded-3xl border border-[#EADFCF] bg-gradient-to-br from-[#FFF9F1] via-[#FFFBF6] to-[#EEF4EC] p-6 shadow-xs sm:p-8">
+    <div className="max-w-4xl mx-auto space-y-6 animate-fadeIn">
+      <section className="relative rounded-3xl border border-[#EADFCF] bg-gradient-to-br from-[#FFF9F1] via-[#FFFBF6] to-[#EEF4EC] p-6 shadow-xs sm:p-8">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#EEF4EC] text-[#5F7C58]">
             <Baby className="h-6 w-6" aria-hidden="true" />
           </div>
-          <div>
+          <div className="flex-1 pr-14 sm:pr-20">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#5F7C58]">Little moments, thoughtfully organized</p>
             <h1 className="font-serif text-3xl font-bold text-[#45362F] sm:text-4xl">Newborn care</h1>
             <p className="mt-3 max-w-2xl leading-relaxed text-[#705B51]">
@@ -143,9 +130,9 @@ export default function NewbornCare({ userId, onBackToDashboard }) {
             </p>
           </div>
         </div>
-        <div className="mt-6 flex items-start gap-3 rounded-2xl border border-[#EADFCF] bg-white/80 p-4 text-sm leading-relaxed text-[#705B51]">
-          <Info className="mt-0.5 h-5 w-5 shrink-0 text-[#8667A0]" aria-hidden="true" />
-          <p>This log is for organizing your own observations. It does not assess your baby’s health or replace advice from your child’s healthcare professional. Contact them if you have concerns.</p>
+
+        <div className="absolute bottom-5 right-5 sm:bottom-7 sm:right-7">
+          <FeatureTip tip="This log is for organizing your own observations. It does not assess your baby’s health or replace advice from your child’s healthcare professional. Contact them if you have concerns." />
         </div>
       </section>
 

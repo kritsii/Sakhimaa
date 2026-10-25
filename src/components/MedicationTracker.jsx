@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Check, Clock3, Plus, Trash2 } from 'lucide-react';
 import ThemedDropdown from './ThemedDropdown';
+import FeatureTip from './FeatureTip';
 
 const STORAGE_KEY = 'sakhimaa-medications';
 
@@ -115,16 +116,21 @@ export default function MedicationTracker() {
       className="mt-10 rounded-[24px] border border-[#EADFCF] bg-[#FFFDF9] p-5 shadow-sm sm:p-8"
       aria-labelledby="medication-tracker-title"
     >
-      <div className="mb-7 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#5F7C58]">Your care, in one place</p>
           <h3 id="medication-tracker-title" className="font-serif text-2xl font-bold text-[#45362F] sm:text-3xl">
             Medication tracker
           </h3>
         </div>
-        <p className="max-w-md text-sm leading-relaxed text-[#705B51]">
-          Keep your medication details and dose notes together. Follow the instructions from your healthcare professional.
-        </p>
+        <div className="flex flex-col sm:flex-row sm:items-end gap-3 max-w-lg">
+          <p className="text-sm leading-relaxed text-[#705B51] flex-1">
+            Keep your medication details and dose notes together. Follow the instructions from your healthcare professional.
+          </p>
+          <div className="self-end shrink-0">
+            <FeatureTip tip="Record medication names and times accurately. Never start, stop, or change prescribed maternal medications or supplements without speaking with your doctor." />
+          </div>
+        </div>
       </div>
 
       {storageError && (

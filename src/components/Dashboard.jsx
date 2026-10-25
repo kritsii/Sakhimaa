@@ -13,11 +13,17 @@ import BreastfeedingSupport from './BreastfeedingSupport';
 import NewbornCare from './NewbornCare';
 import AppointmentPlanner from './AppointmentPlanner';
 import PregnancyWeekGuide from './PregnancyWeekGuide';
+import MedicalReportAnalysis from './MedicalReportAnalysis';
 import { updateUserProfileStorage } from '../utils/dashboardStorage';
 import { 
   createDynamicDueDate, 
   createDynamicDeliveryDate 
 } from '../utils/dateCalculations';
+import {
+  DASHBOARD_ROUTES,
+  PREGNANCY_FEATURE_CARDS,
+  POSTNATAL_FEATURE_CARDS,
+} from '../constants/routes';
 
 export default function Dashboard({ 
   currentUser, 
@@ -25,9 +31,18 @@ export default function Dashboard({
   onGoToHome,
   onUpdateUser 
 }) {
+  // Resolve any initial feature directly from current URL so refresh stays on active feature
+  const getInitialFeature = () => {
+    if (typeof window === 'undefined') return null;
+    const path = window.location.pathname;
+    const allCards = [...PREGNANCY_FEATURE_CARDS, ...POSTNATAL_FEATURE_CARDS];
+    return allCards.find((c) => c.path === path) || null;
+  };
+
+  const initialFeature = getInitialFeature();
   // Navigation view: 'dashboard' | 'feature'
-  const [currentView, setCurrentView] = useState('dashboard');
-  const [selectedFeature, setSelectedFeature] = useState(null);
+  const [currentView, setCurrentView] = useState(initialFeature ? 'feature' : 'dashboard');
+  const [selectedFeature, setSelectedFeature] = useState(initialFeature);
   
   // Date modal state
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
@@ -66,16 +81,41 @@ export default function Dashboard({
     showToast('Your stage dates have been updated successfully! ♡');
   };
 
+  // Support direct URL navigation or browser back/forward history
+  useEffect(() => {
+    const handleUrlSync = () => {
+      const path = window.location.pathname;
+      const allCards = [...PREGNANCY_FEATURE_CARDS, ...POSTNATAL_FEATURE_CARDS];
+      const matched = allCards.find((c) => c.path === path);
+      if (matched) {
+        setSelectedFeature(matched);
+        setCurrentView('feature');
+      } else if (path === DASHBOARD_ROUTES.DASHBOARD_OVERVIEW || path === '/dashboard') {
+        setSelectedFeature(null);
+        setCurrentView('dashboard');
+      }
+    };
+
+    window.addEventListener('popstate', handleUrlSync);
+    return () => window.removeEventListener('popstate', handleUrlSync);
+  }, []);
+
   // Feature navigation
   const handleNavigateToFeature = (featureCard) => {
     setSelectedFeature(featureCard);
     setCurrentView('feature');
+    if (featureCard?.path && window.location.pathname !== featureCard.path) {
+      window.history.pushState({}, '', featureCard.path);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToDashboard = () => {
     setCurrentView('dashboard');
     setSelectedFeature(null);
+    if (window.location.pathname !== DASHBOARD_ROUTES.DASHBOARD_OVERVIEW) {
+      window.history.pushState({}, '', DASHBOARD_ROUTES.DASHBOARD_OVERVIEW);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -92,6 +132,9 @@ export default function Dashboard({
   const isNewbornCare = selectedFeature?.routeConstant === 'NEWBORN_CARE';
   const isAntenatalAppointments = selectedFeature?.routeConstant === 'PREGNANCY_APPOINTMENTS';
   const isPregnancyGuide = selectedFeature?.routeConstant === 'PREGNANCY_GUIDE';
+  const isReportAnalysis =
+    selectedFeature?.routeConstant === 'PREGNANCY_REPORTS' ||
+    selectedFeature?.routeConstant === 'POSTNATAL_REPORTS';
 
   return (
     <div className="min-h-screen bg-[#F7F1E8] text-[#45362F] flex flex-col selection:bg-[#F08070]/30 selection:text-[#45362F] relative font-sans">
@@ -113,8 +156,12 @@ export default function Dashboard({
         currentUser={currentUser}
         currentView={currentView}
         onNavigate={(view) => {
-          setCurrentView(view);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (view === 'dashboard') {
+            handleBackToDashboard();
+          } else {
+            setCurrentView(view);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
         }}
         onLogout={onLogout}
         onGoToHome={onGoToHome}
@@ -218,6 +265,16 @@ export default function Dashboard({
             ) : isPregnancyGuide ? (
               <PregnancyWeekGuide
                 dueDate={currentUser?.dueDate}
+                onBackToDashboard={handleBackToDashboard}
+              />
+            ) : isReportAnalysis ? (
+              <MedicalReportAnalysis
+                currentUser={currentUser}
+                journey={
+                  selectedFeature?.routeConstant === 'POSTNATAL_REPORTS'
+                    ? 'postnatal'
+                    : 'pregnant'
+                }
                 onBackToDashboard={handleBackToDashboard}
               />
             ) : (

@@ -44,10 +44,11 @@ h1, h2, h3, h4, .font-serif {
 
 /* Custom soft scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F7F1E8;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #E3D3C1;
@@ -55,6 +56,15 @@ h1, h2, h3, h4, .font-serif {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #D98F96;
+}
+
+/* Hide scrollbar while preserving full scrollability */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Organic blobs & backdrop glows */

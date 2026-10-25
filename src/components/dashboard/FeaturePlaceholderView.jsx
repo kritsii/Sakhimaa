@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-  ArrowLeft, 
-  Sparkles, 
-  Compass, 
-  Code2, 
-  CheckCircle2, 
+import {
+  ArrowLeft,
+  Sparkles,
+  Compass,
+  Code2,
+  CheckCircle2,
   HeartPulse,
   FileText,
   Pill,
@@ -48,25 +48,11 @@ export default function FeaturePlaceholderView({
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
-      
-      {/* Top Header / Breadcrumbs */}
-      <div className="flex items-center justify-between pb-4 border-b border-[#EADFCF]">
-        <button
-          onClick={onBackToDashboard}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-[#45362F] bg-white border border-[#EADFCF] hover:border-[#559C91] hover:text-[#559C91] shadow-xs cursor-pointer transition-all"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Dashboard</span>
-        </button>
-
-        <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#EEF4EC] text-[#559C91] border border-[#559C91]/30">
-          Module Connected
-        </span>
-      </div>
+      {/* Feature Showcase Card */}
 
       {/* Feature Showcase Card */}
       <div className="rounded-3xl bg-[#FFF9F1] border border-[#EADFCF] p-8 sm:p-12 shadow-sm space-y-6 text-center sm:text-left">
-        
+
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
           <div className="w-16 h-16 rounded-3xl bg-[#EEF4EC] border border-[#559C91]/30 flex items-center justify-center text-[#559C91] shrink-0 shadow-xs">
             <IconComponent className="w-8 h-8 stroke-[1.8]" />

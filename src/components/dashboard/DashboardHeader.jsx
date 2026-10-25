@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  LogOut, 
-  ChevronDown, 
-  Calendar, 
-  Home, 
-  Menu, 
+import {
+  LogOut,
+  ChevronDown,
+  Calendar,
+  Home,
+  Menu,
   X,
   Compass
 } from 'lucide-react';
@@ -32,7 +32,7 @@ export default function DashboardHeader({
     <header className="sticky top-0 z-40 bg-[#FFF9F1]/95 backdrop-blur-md border-b border-[#EADFCF] shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          
+
           {/* Left: SakhiMaa Brand Logo & Title */}
           <div className="flex items-center gap-3">
             <button
@@ -57,15 +57,14 @@ export default function DashboardHeader({
 
           {/* Right: Desktop Navigation Items */}
           <nav className="hidden lg:flex items-center gap-4" aria-label="Dashboard Top Navigation">
-            
+
             {/* Dashboard Overview Link */}
             <button
               onClick={() => onNavigate('dashboard')}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                currentView === 'dashboard'
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${currentView === 'dashboard'
                   ? 'bg-[#EEF4EC] text-[#559C91] shadow-xs'
                   : 'text-[#705B51] hover:text-[#45362F] hover:bg-[#F7F1E8]'
-              }`}
+                }`}
             >
               <Compass className="w-4 h-4 text-[#559C91]" />
               <span>Dashboard</span>
@@ -79,14 +78,14 @@ export default function DashboardHeader({
               </span>
             </div>
 
-            {/* View Landing Page link */}
+            {/* View Home Page link */}
             <button
               onClick={onGoToHome}
               className="text-xs font-medium text-[#705B51] hover:text-[#45362F] transition-colors px-2 py-1 cursor-pointer flex items-center gap-1"
-              title="Return to the main landing page"
+              title="Return to the home page"
             >
               <Home className="w-3.5 h-3.5" />
-              <span>Landing Page</span>
+              <span>Home Page</span>
             </button>
 
             {/* User Profile Menu */}
@@ -111,9 +110,8 @@ export default function DashboardHeader({
                     <p className="text-sm font-bold text-[#45362F] truncate">{currentUser?.name || 'Sakhi'}</p>
                     <p className="text-xs text-[#705B51] truncate">{currentUser?.email || 'ananya@example.com'}</p>
                     <div className="mt-2 flex items-center gap-1.5">
-                      <span className={`inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full ${
-                        isPregnant ? 'bg-[#EEF4EC] text-[#559C91]' : 'bg-[#FCECE5] text-[#F08070]'
-                      }`}>
+                      <span className={`inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full ${isPregnant ? 'bg-[#EEF4EC] text-[#559C91]' : 'bg-[#FCECE5] text-[#F08070]'
+                        }`}>
                         {isPregnant ? "I'm Pregnant" : "I've Delivered"}
                       </span>
                     </div>
@@ -164,16 +162,15 @@ export default function DashboardHeader({
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#FFF9F1] border-b border-[#EADFCF] px-4 pt-3 pb-6 space-y-3 shadow-lg animate-fadeIn">
-          
+
           {/* User Info Bar */}
           <div className="p-3 bg-[#EEF4EC]/60 rounded-2xl border border-[#559C91]/20 flex items-center justify-between">
             <div>
               <p className="text-xs text-[#705B51]">Signed in as</p>
               <p className="text-sm font-bold text-[#45362F]">{currentUser?.name || 'Sakhi'}</p>
             </div>
-            <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${
-              isPregnant ? 'bg-white text-[#559C91] border border-[#559C91]/30' : 'bg-white text-[#F08070] border border-[#F08070]/30'
-            }`}>
+            <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${isPregnant ? 'bg-white text-[#559C91] border border-[#559C91]/30' : 'bg-white text-[#F08070] border border-[#F08070]/30'
+              }`}>
               {isPregnant ? "Pregnant" : "Delivered"}
             </span>
           </div>
@@ -210,7 +207,7 @@ export default function DashboardHeader({
               className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-[#705B51] hover:bg-[#F7F1E8] flex items-center gap-2.5"
             >
               <Home className="w-4 h-4" />
-              <span>Back to Landing Page</span>
+              <span>Home Page</span>
             </button>
           </div>
 

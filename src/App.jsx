@@ -34,18 +34,6 @@ export default function App() {
       ? requestedJourney
       : null;
 
-  const [currentPage, setCurrentPage] = useState('landing');
-
-  const [selectedJourney, setSelectedJourney] = useState(
-    initialJourney
-  );
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalInitialJourney, setModalInitialJourney] =
-    useState('pregnant');
-
-  const [toastMessage, setToastMessage] = useState(null);
-
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const saved = localStorage.getItem('sakhimaa_current_user');
@@ -55,10 +43,85 @@ export default function App() {
     }
   });
 
+  const isDashboardRoute = (path) => {
+    if (!path) return false;
+    if (path === '/dashboard' || path.startsWith('/dashboard/')) return true;
+    if (path.startsWith('/pregnancy/')) return true;
+    if (path.startsWith('/postnatal/')) return true;
+    if (path.startsWith('/wellness/')) return true;
+    if (path === '/health-reports') return true;
+    return false;
+  };
+
+  const [currentPage, setCurrentPage] = useState(() => {
+    if (isMedicationTrackerPage || isSymptomTrackerPage) {
+      return 'landing';
+    }
+
+    if (typeof window !== 'undefined') {
+      if (isDashboardRoute(window.location.pathname)) {
+        return 'dashboard';
+      }
+      try {
+        const storedPage = localStorage.getItem('sakhimaa_current_page');
+        if (storedPage === 'dashboard') {
+          return 'dashboard';
+        }
+      } catch (e) {
+        console.error('Storage error', e);
+      }
+    }
+    return 'landing';
+  });
+
+  const [selectedJourney, setSelectedJourney] = useState(
+    initialJourney || currentUser?.journey || 'pregnant'
+  );
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInitialJourney, setModalInitialJourney] =
+    useState('pregnant');
+
+  const [toastMessage, setToastMessage] = useState(null);
+
   const showToast = (message) => {
     setToastMessage(message);
     setTimeout(() => setToastMessage(null), 4000);
   };
+
+  // Sync currentPage to localStorage and ensure proper URL synchronization
+  useEffect(() => {
+    try {
+      localStorage.setItem('sakhimaa_current_page', currentPage);
+    } catch (error) {
+      console.error('Storage error', error);
+    }
+
+    if (currentPage === 'dashboard') {
+      if (window.location.pathname === '/' || window.location.pathname === '') {
+        window.history.replaceState({}, '', '/dashboard');
+      }
+    } else if (currentPage === 'landing') {
+      if (isDashboardRoute(window.location.pathname)) {
+        window.history.replaceState({}, '', '/');
+      }
+    }
+  }, [currentPage]);
+
+  // Sync browser back/forward buttons with currentPage
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      if (isDashboardRoute(path)) {
+        setCurrentPage('dashboard');
+      } else if (path === '/' || path === '') {
+        setCurrentPage('landing');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   useEffect(() => {
     if (isTrackerPage || !window.location.hash) return;
@@ -81,6 +144,30 @@ export default function App() {
     setIsModalOpen(true);
   };
 
+  const handleGoToDashboard = () => {
+    try {
+      localStorage.setItem('sakhimaa_current_page', 'dashboard');
+    } catch (error) {
+      console.error('Storage error', error);
+    }
+    if (window.location.pathname === '/' || !isDashboardRoute(window.location.pathname)) {
+      window.history.pushState({}, '', '/dashboard');
+    }
+    setCurrentPage('dashboard');
+  };
+
+  const handleGoToHome = () => {
+    try {
+      localStorage.setItem('sakhimaa_current_page', 'landing');
+    } catch (error) {
+      console.error('Storage error', error);
+    }
+    if (window.location.pathname !== '/') {
+      window.history.pushState({}, '', '/');
+    }
+    setCurrentPage('landing');
+  };
+
   const handleAuthSuccess = (user, journeyStage) => {
     setCurrentUser(user);
 
@@ -89,12 +176,17 @@ export default function App() {
         'sakhimaa_current_user',
         JSON.stringify(user)
       );
+      localStorage.setItem('sakhimaa_current_page', 'dashboard');
     } catch (error) {
       console.error('Storage error', error);
     }
 
     if (journeyStage) {
       setSelectedJourney(journeyStage);
+    }
+
+    if (window.location.pathname === '/' || !isDashboardRoute(window.location.pathname)) {
+      window.history.pushState({}, '', '/dashboard');
     }
 
     setCurrentPage('dashboard');
@@ -107,8 +199,13 @@ export default function App() {
 
     try {
       localStorage.removeItem('sakhimaa_current_user');
+      localStorage.setItem('sakhimaa_current_page', 'landing');
     } catch (error) {
       console.error('Storage error', error);
+    }
+
+    if (window.location.pathname !== '/') {
+      window.history.pushState({}, '', '/');
     }
 
     setCurrentPage('landing');
@@ -141,7 +238,7 @@ export default function App() {
         <Dashboard
           currentUser={currentUser}
           onLogout={handleLogout}
-          onGoToHome={() => setCurrentPage('landing')}
+          onGoToHome={handleGoToHome}
           onUpdateUser={handleUpdateUser}
         />
       </div>
@@ -167,7 +264,7 @@ export default function App() {
         onOpenGetStarted={() => handleOpenGetStarted()}
         currentUser={currentUser}
         onLogout={handleLogout}
-        onGoToDashboard={() => setCurrentPage('dashboard')}
+        onGoToDashboard={handleGoToDashboard}
         isTrackerPage={isTrackerPage}
       />
 
@@ -267,6 +364,7 @@ export default function App() {
             <JourneySelector
               selectedJourney={selectedJourney}
               onSelectJourney={handleSelectJourney}
+              onOpenGetStarted={handleOpenGetStarted}
             />
 
             {selectedJourney === 'pregnant' && (

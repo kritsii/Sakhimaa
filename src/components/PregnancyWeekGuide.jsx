@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  ArrowLeft,
   BookOpen,
   CalendarHeart,
   Heart,
@@ -8,6 +7,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import ThemedDropdown from './ThemedDropdown';
+import FeatureTip from './FeatureTip';
 import {
   calculatePregnancyProgress,
   getPregnancyMonth,
@@ -71,33 +71,23 @@ export default function PregnancyWeekGuide({ dueDate, onBackToDashboard }) {
   const weekGuidance = getWeekGuidance(week, trimester);
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
-      <div className="flex items-center justify-between gap-3 border-b border-[#EADFCF] pb-3">
-        <button
-          type="button"
-          onClick={onBackToDashboard}
-          className="inline-flex items-center gap-2 rounded-full border border-[#EADFCF] bg-white px-4 py-2 text-sm font-semibold text-[#45362F] shadow-xs transition-colors hover:border-[#559C91] hover:text-[#559C91] focus:outline-none focus:ring-2 focus:ring-[#559C91] cursor-pointer"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          <span>Back to Dashboard</span>
-        </button>
-        <span className="rounded-full border border-[#8B7BB0]/30 bg-[#F3EFF9] px-3 py-1 text-xs font-semibold text-[#755F91]">
-          Pregnancy guidance
-        </span>
-      </div>
-
-      <section className="rounded-3xl border border-[#EADFCF] bg-gradient-to-br from-[#FFF9F1] via-[#FFFBF6] to-[#F3EFF9] p-6 shadow-xs sm:p-8">
+    <div className="max-w-5xl mx-auto space-y-6 animate-fadeIn">
+      <section className="relative rounded-3xl border border-[#EADFCF] bg-gradient-to-br from-[#FFF9F1] via-[#FFFBF6] to-[#F3EFF9] p-6 shadow-xs sm:p-8">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F3EFF9] text-[#8B7BB0]">
             <BookOpen className="h-6 w-6" aria-hidden="true" />
           </div>
-          <div>
+          <div className="flex-1 pr-14 sm:pr-20">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#8B7BB0]">A calm companion for your journey</p>
             <h1 className="font-serif text-3xl font-bold text-[#45362F] sm:text-4xl">Pregnancy week &amp; health guide</h1>
             <p className="mt-3 max-w-3xl leading-relaxed text-[#705B51]">
               Browse general wellbeing guidance by week and trimester. This is an educational guide—not a tracker, diagnosis, or personalized care plan.
             </p>
           </div>
+        </div>
+
+        <div className="absolute bottom-5 right-5 sm:bottom-7 sm:right-7">
+          <FeatureTip tip="This guide provides general educational information and cannot assess your pregnancy or replace care from a qualified healthcare professional. Guidance and recommended timing can vary by person and location. Contact your maternity care team for advice specific to you; seek urgent or emergency care for severe or concerning symptoms." />
         </div>
       </section>
 
@@ -168,12 +158,6 @@ export default function PregnancyWeekGuide({ dueDate, onBackToDashboard }) {
         </ul>
       </section>
 
-      <div className="flex items-start gap-3 rounded-2xl border border-[#EADFCF] bg-[#F7F1E8] p-4 text-xs leading-relaxed text-[#705B51]">
-        <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#8667A0]" aria-hidden="true" />
-        <p>
-          This guide provides general educational information and cannot assess your pregnancy or replace care from a qualified healthcare professional. Guidance and recommended timing can vary by person and location. Contact your maternity care team for advice specific to you; seek urgent or emergency care for severe or concerning symptoms.
-        </p>
-      </div>
     </div>
   );
 }

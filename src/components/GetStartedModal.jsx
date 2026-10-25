@@ -171,7 +171,7 @@ export default function GetStartedModal({
       aria-labelledby="auth-modal-title"
     >
       <div
-        className="relative w-full max-w-md sm:max-w-lg bg-[#FFF9F1] rounded-3xl border-2 border-[#EADFCF] shadow-2xl p-6 sm:p-8 overflow-hidden text-[#45362F] transition-all max-h-[92vh] overflow-y-auto"
+        className="relative w-full max-w-md sm:max-w-lg bg-[#FFF9F1] rounded-3xl border-2 border-[#EADFCF] shadow-2xl p-6 sm:p-8 overflow-hidden text-[#45362F] transition-all max-h-[92vh] overflow-y-auto no-scrollbar"
       >
         {/* Decorative soft gradient blobs */}
         <div className="absolute -top-16 -right-16 w-44 h-44 bg-[#F4B49B]/25 rounded-full blur-2xl pointer-events-none" />

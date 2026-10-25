@@ -1,7 +1,6 @@
-import React from 'react';
-import { ArrowRight, CheckCircle2, Baby, HeartPulse } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Baby, HeartPulse, Sparkles } from 'lucide-react';
 
-export default function JourneySelector({ selectedJourney, onSelectJourney }) {
+export default function JourneySelector({ selectedJourney, onSelectJourney, onOpenGetStarted }) {
   const handleSelect = (journey) => {
     onSelectJourney(journey);
     const targetId = journey === 'pregnant' ? 'pregnancy-section' : 'postnatal-section';
@@ -124,17 +123,32 @@ export default function JourneySelector({ selectedJourney, onSelectJourney }) {
               </div>
 
               {/* CTA Action */}
-              <div className="pt-2">
+              <div className="pt-2 space-y-2.5">
                 <div 
-                  className={`inline-flex items-center justify-between w-full px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 shadow-xs ${
+                  className={`group/explore inline-flex items-center justify-between w-full px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 shadow-xs ${
                     selectedJourney === 'pregnant'
                       ? 'bg-[#D98F96] text-white'
-                      : 'text-[#45362F] bg-[#FCECE5] group-hover:bg-[#D98F96] group-hover:text-white'
+                      : 'text-[#45362F] bg-[#FCECE5] hover:bg-[#D98F96] hover:text-white'
                   }`}
                 >
                   <span>Explore Pregnancy Care</span>
-                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 transform group-hover/explore:translate-x-1 transition-transform" />
                 </div>
+
+                {onOpenGetStarted && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenGetStarted('pregnant');
+                    }}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer text-[#45362F] bg-[#FCECE5] hover:bg-[#D98F96] hover:text-white"
+                    aria-label="Get started with pregnancy care - sign in or create an account"
+                  >
+                    <Sparkles className="w-4 h-4 transition-colors" />
+                    <span>Get Started</span>
+                  </button>
+                )}
               </div>
             </div>
 
@@ -216,17 +230,32 @@ export default function JourneySelector({ selectedJourney, onSelectJourney }) {
               </div>
 
               {/* CTA Action */}
-              <div className="pt-2">
+              <div className="pt-2 space-y-2.5">
                 <div 
-                  className={`inline-flex items-center justify-between w-full px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 shadow-xs ${
+                  className={`group/explore inline-flex items-center justify-between w-full px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 shadow-xs ${
                     selectedJourney === 'postnatal'
                       ? 'bg-[#5F7C58] text-white'
-                      : 'text-[#45362F] bg-[#EEF4EC] group-hover:bg-[#5F7C58] group-hover:text-white'
+                      : 'text-[#45362F] bg-[#EEF4EC] hover:bg-[#5F7C58] hover:text-white'
                   }`}
                 >
                   <span>Explore Postnatal Care</span>
-                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 transform group-hover/explore:translate-x-1 transition-transform" />
                 </div>
+
+                {onOpenGetStarted && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenGetStarted('postnatal');
+                    }}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer text-[#45362F] bg-[#EEF4EC] hover:bg-[#5F7C58] hover:text-white"
+                    aria-label="Get started with postnatal care - sign in or create an account"
+                  >
+                    <Sparkles className="w-4 h-4 transition-colors" />
+                    <span>Get Started</span>
+                  </button>
+                )}
               </div>
             </div>
 
