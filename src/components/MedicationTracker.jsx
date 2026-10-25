@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Check, Clock3, Plus, Trash2 } from 'lucide-react';
+import ThemedDropdown from './ThemedDropdown';
 
 const STORAGE_KEY = 'sakhimaa-medications';
 
@@ -159,15 +160,16 @@ export default function MedicationTracker() {
           </label>
           <label className="text-sm font-medium text-[#705B51]">
             Schedule
-            <select
-              name="frequency"
+            <ThemedDropdown
+              id="medication-schedule"
+              label="Schedule"
               value={form.frequency}
-              onChange={handleChange}
-              className="mt-1.5 w-full rounded-xl border border-[#D9E3D6] bg-white px-3.5 py-2.5 text-[#45362F] outline-none focus:border-[#7D9A75] focus:ring-2 focus:ring-[#A8BCA1]/30"
-            >
-              <option value="daily">Daily</option>
-              <option value="as-needed">As needed</option>
-            </select>
+              options={[
+                { value: 'daily', label: 'Daily' },
+                { value: 'as-needed', label: 'As needed' },
+              ]}
+              onChange={(frequency) => setForm((currentForm) => ({ ...currentForm, frequency }))}
+            />
           </label>
           {form.frequency === 'daily' && (
             <label className="text-sm font-medium text-[#705B51]">

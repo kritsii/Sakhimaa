@@ -8,6 +8,11 @@ import FeaturePlaceholderView from './dashboard/FeaturePlaceholderView';
 import DateSettingsModal from './dashboard/DateSettingsModal';
 import SymptomTracker from './SymptomTracker';
 import MedicationTracker from './MedicationTracker';
+import YogaGuide from './YogaGuide';
+import BreastfeedingSupport from './BreastfeedingSupport';
+import NewbornCare from './NewbornCare';
+import AppointmentPlanner from './AppointmentPlanner';
+import PregnancyWeekGuide from './PregnancyWeekGuide';
 import { updateUserProfileStorage } from '../utils/dashboardStorage';
 import { 
   createDynamicDueDate, 
@@ -81,6 +86,12 @@ export default function Dashboard({
   const isMedicationTracker = 
     selectedFeature?.routeConstant === 'PREGNANCY_MEDICATIONS' || 
     selectedFeature?.routeConstant === 'POSTNATAL_MEDICATIONS';
+
+  const isYogaGuide = selectedFeature?.routeConstant === 'YOGA_GUIDE';
+  const isBreastfeedingSupport = selectedFeature?.routeConstant === 'BREASTFEEDING';
+  const isNewbornCare = selectedFeature?.routeConstant === 'NEWBORN_CARE';
+  const isAntenatalAppointments = selectedFeature?.routeConstant === 'PREGNANCY_APPOINTMENTS';
+  const isPregnancyGuide = selectedFeature?.routeConstant === 'PREGNANCY_GUIDE';
 
   return (
     <div className="min-h-screen bg-[#F7F1E8] text-[#45362F] flex flex-col selection:bg-[#F08070]/30 selection:text-[#45362F] relative font-sans">
@@ -184,6 +195,31 @@ export default function Dashboard({
 
                 <MedicationTracker />
               </div>
+            ) : isYogaGuide ? (
+              <YogaGuide
+                journey={currentUser?.journey === 'postnatal' ? 'postnatal' : 'pregnant'}
+                onBackToDashboard={handleBackToDashboard}
+              />
+            ) : isBreastfeedingSupport ? (
+              <BreastfeedingSupport
+                userId={currentUser?.id}
+                onBackToDashboard={handleBackToDashboard}
+              />
+            ) : isNewbornCare ? (
+              <NewbornCare
+                userId={currentUser?.id}
+                onBackToDashboard={handleBackToDashboard}
+              />
+            ) : isAntenatalAppointments ? (
+              <AppointmentPlanner
+                userId={currentUser?.id}
+                onBackToDashboard={handleBackToDashboard}
+              />
+            ) : isPregnancyGuide ? (
+              <PregnancyWeekGuide
+                dueDate={currentUser?.dueDate}
+                onBackToDashboard={handleBackToDashboard}
+              />
             ) : (
               <FeaturePlaceholderView
                 feature={selectedFeature}

@@ -70,7 +70,7 @@ export default function ThemedDropdown({ id, label, value, options, placeholder,
             openDropdown();
           }
         }}
-        className={`flex w-full items-center justify-between rounded-xl border bg-[#FFFDF9] px-3.5 py-2.5 text-left text-sm shadow-sm transition-all hover:border-[#D98F96]/60 focus:outline-none focus:ring-2 focus:ring-[#D98F96]/25 ${
+        className={`flex w-full items-center justify-between rounded-xl border bg-white px-3.5 py-2.5 text-left text-sm shadow-sm transition-all hover:border-[#D98F96]/60 focus:outline-none focus:ring-2 focus:ring-[#D98F96]/25 ${
           isOpen ? 'border-[#D98F96] ring-2 ring-[#D98F96]/20' : 'border-[#EADFCF]'
         }`}
       >

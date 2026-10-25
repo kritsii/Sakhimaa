@@ -16,7 +16,7 @@ export const DASHBOARD_ROUTES = {
   PREGNANCY_MEDICATIONS: '/pregnancy/medications',
   PREGNANCY_APPOINTMENTS: '/pregnancy/appointments',
   PREGNANCY_GUIDE: '/pregnancy/week-by-week-guide',
-  YOGA_GUIDE: '/wellness/prenatal-yoga',
+  YOGA_GUIDE: '/wellness/yoga-and-asanas',
 
   // Postnatal Healthcare Features
   POSTNATAL_RECOVERY: '/postnatal/recovery-tracker',
