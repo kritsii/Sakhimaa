@@ -113,7 +113,7 @@ export default function MedicationTracker() {
   return (
     <section
       id="medication-tracker"
-      className="mt-10 rounded-[24px] border border-[#EADFCF] bg-[#FFFDF9] p-5 shadow-sm sm:p-8"
+      className="rounded-[28px] border border-[#EADFCF] bg-[#FFFDF9] shadow-xl p-6 sm:p-9 md:p-10"
       aria-labelledby="medication-tracker-title"
     >
       <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

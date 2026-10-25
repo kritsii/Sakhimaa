@@ -1,0 +1,209 @@
+import React, { useEffect, useState } from 'react';
+import './Preloader.css';
+
+/**
+ * SakhiMaa Signature Brand Preloader
+ * 
+ * Features:
+ * - Progressive outline sketch animation of the mother (teal) and baby (coral) shapes.
+ * - Soft fill transition into the logo's authentic brand colors.
+ * - Gentle cross-fade to the crisp original logo image with a warm glowing aura.
+ * - Elegant reveal of "SakhiMaa" and brand tagline "Care for her. Care for them."
+ * - Subtle, thin indeterminate loading line and reassuring status message.
+ * - Respects prefers-reduced-motion for instant, accessible presentation.
+ * - Smooth fade-out unmount once the application is ready.
+ */
+export default function Preloader({ onFinish, minDuration = 2100 }) {
+  const [isExiting, setIsExiting] = useState(false);
+  const [isRendered, setIsRendered] = useState(true);
+
+  // Exact vector paths extracted from public/logo.png
+  const MOTHER_OUTER_PATH =
+    "M109.5 182.0 L107.0 182.5 L105.0 181.5 L103.5 179.0 L101.5 178.0 L100.5 175.0 L93.0 167.5 L66.0 144.5 L62.0 142.5 L61.5 141.0 L49.5 130.0 L40.5 119.0 L38.5 114.0 L36.5 112.0 L36.5 110.0 L32.5 104.0 L28.5 92.0 L28.5 75.0 L29.5 74.0 L29.5 70.0 L31.5 63.0 L34.5 58.0 L47.0 45.5 L54.0 41.5 L65.0 37.5 L74.0 37.5 L75.0 36.5 L77.0 37.5 L87.0 37.5 L95.0 41.5 L97.0 41.5 L105.5 48.0 L112.5 59.0 L112.5 75.0 L107.5 82.0 L108.5 88.0 L106.5 91.0 L106.5 95.0 L103.5 99.0 L102.5 103.0 L99.0 106.5 L97.0 106.5 L94.0 108.5 L83.5 110.0 L84.5 115.0 L89.5 122.0 L94.0 124.5 L98.0 128.5 L104.0 130.5 L106.5 133.0 L107.5 136.0 L97.0 136.5 L91.0 132.5 L89.0 132.5 L79.5 122.0 L74.5 112.0 L74.5 103.0 L78.0 99.5 L91.0 100.5 L95.0 98.5 L99.5 90.0 L99.0 88.5 L97.0 88.5 L94.0 90.5 L87.0 91.5 L82.0 94.5 L79.0 94.5 L69.0 100.5 L64.5 106.0 L62.5 117.0 L58.5 120.0 L77.0 139.5 L96.0 155.5 L105.5 166.0 L105.5 168.0 L107.5 170.0 L110.5 177.0 L109.5 182.0 Z";
+
+  const MOTHER_INNER_PATH =
+    "M56.0 114.5 L56.5 104.0 L59.5 99.0 L66.0 92.5 L71.0 88.5 L74.0 88.5 L79.0 85.5 L81.0 85.5 L84.0 83.5 L87.0 83.5 L95.0 79.5 L98.0 77.5 L102.5 72.0 L103.5 70.0 L103.5 63.0 L101.5 59.0 L95.0 52.5 L87.0 48.5 L83.0 48.5 L82.0 47.5 L65.0 49.5 L58.0 52.5 L52.0 57.5 L45.5 66.0 L42.5 72.0 L42.5 94.0 L48.5 105.0 L49.5 109.0 L54.0 114.5 L56.0 114.5 Z";
+
+  const BABY_OUTER_PATH =
+    "M112.5 178.0 L112.0 178.5 L109.5 175.0 L112.5 171.0 L112.5 169.0 L120.0 162.5 L123.0 158.5 L128.0 155.5 L137.0 147.5 L141.0 145.5 L147.0 139.5 L150.0 138.5 L163.5 126.0 L164.5 123.0 L170.5 116.0 L171.5 111.0 L175.5 105.0 L175.5 101.0 L176.5 100.0 L176.5 84.0 L175.5 81.0 L171.5 76.0 L170.5 73.0 L161.0 64.5 L155.0 63.5 L151.0 61.5 L140.0 61.5 L139.0 62.5 L129.0 64.5 L125.0 68.5 L118.0 70.5 L114.5 68.0 L114.5 65.0 L118.0 60.5 L123.0 57.5 L125.0 57.5 L128.0 54.5 L131.0 54.5 L142.0 50.5 L158.0 51.5 L170.0 55.5 L181.5 64.0 L189.5 79.0 L189.5 82.0 L190.5 83.0 L190.5 100.0 L185.5 115.0 L178.5 124.0 L175.5 130.0 L172.0 132.5 L169.0 136.5 L149.0 152.5 L145.0 153.5 L142.0 157.5 L134.0 161.5 L120.0 173.5 L112.5 178.0 Z";
+
+  const BABY_INNER_PATH =
+    "M105.5 161.0 L101.5 161.0 L100.5 159.0 L100.5 154.0 L106.5 144.0 L117.0 135.5 L125.0 132.5 L132.0 127.5 L141.5 116.0 L141.5 102.0 L135.0 95.5 L130.0 93.5 L125.0 93.5 L118.0 95.5 L116.5 98.0 L112.5 101.0 L110.5 105.0 L110.5 111.0 L106.5 116.0 L106.5 121.0 L111.0 124.5 L119.0 125.5 L120.5 127.0 L120.5 129.0 L118.0 131.5 L115.0 131.5 L114.0 132.5 L111.0 132.5 L108.0 130.5 L107.0 133.5 L105.5 132.0 L105.5 130.0 L102.0 128.5 L97.5 122.0 L98.5 114.0 L103.5 107.0 L103.5 100.0 L107.5 94.0 L106.5 92.0 L107.0 91.5 L108.0 93.5 L115.0 87.5 L117.0 87.5 L123.0 84.5 L132.0 84.5 L138.0 87.5 L140.0 87.5 L145.5 91.0 L152.5 103.0 L152.5 120.0 L150.5 122.0 L148.5 127.0 L140.0 136.5 L117.0 149.5 L113.0 152.5 L109.5 156.0 L108.5 159.0 L105.5 161.0 Z";
+
+  useEffect(() => {
+    // Lock body scroll while preloader is active to prevent layout shifts or page scrolling
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const effectiveDuration = prefersReducedMotion ? 400 : minDuration;
+
+    // Track application readiness:
+    // 1. Image cache warm-up for /logo.png
+    const imgPreload = new Promise((resolve) => {
+      const img = new Image();
+      img.src = '/logo.png';
+      if (img.complete) {
+        resolve(true);
+      } else {
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+      }
+    });
+
+    // 2. Font readiness
+    const fontsPreload = document.fonts ? document.fonts.ready : Promise.resolve();
+
+    // 3. Minimum presentation duration for brand elegance
+    const timer = new Promise((resolve) => setTimeout(resolve, effectiveDuration));
+
+    Promise.all([imgPreload, fontsPreload, timer]).then(() => {
+      setIsExiting(true);
+
+      // Clean unmount from DOM after exit transition completes (550ms)
+      const exitTimer = setTimeout(() => {
+        setIsRendered(false);
+        if (onFinish) onFinish();
+      }, 550);
+
+      return () => clearTimeout(exitTimer);
+    });
+  }, [minDuration, onFinish]);
+
+  if (!isRendered) return null;
+
+  return (
+    <div
+      className={`sakhimaa-preloader ${isExiting ? 'exiting' : ''}`}
+      role="status"
+      aria-label="Loading SakhiMaa maternal healthcare"
+      aria-live="polite"
+    >
+      {/* Background ambient lighting */}
+      <div className="sakhimaa-preloader-glow-teal" aria-hidden="true" />
+      <div className="sakhimaa-preloader-glow-coral" aria-hidden="true" />
+
+      {/* Decorative gentle floating particles */}
+      <span className="sakhimaa-floating-sparkle" style={{ top: '28%', left: '32%', width: '5px', height: '5px', animationDelay: '0.4s' }} aria-hidden="true" />
+      <span className="sakhimaa-floating-sparkle" style={{ top: '34%', right: '30%', width: '6px', height: '6px', animationDelay: '1.2s' }} aria-hidden="true" />
+      <span className="sakhimaa-floating-sparkle" style={{ bottom: '38%', left: '36%', width: '4px', height: '4px', animationDelay: '0.8s' }} aria-hidden="true" />
+
+      {/* Main Content Column */}
+      <div className="flex flex-col items-center justify-center relative z-10 px-4 text-center max-w-sm">
+
+        {/* Logo Card with Halo */}
+        <div className="relative mb-6">
+          <div className="sakhimaa-preloader-card-halo" aria-hidden="true" />
+
+          <div className="sakhimaa-preloader-logo-card">
+            {/* SVG Progressive Sketch Layer */}
+            <svg
+              className="sakhimaa-sketch-svg"
+              viewBox="0 0 220 213"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              {/* Mother Figure (Muted Teal / Sage) */}
+              <g className="mother-group">
+                {/* Outlines drawn sequentially */}
+                <path
+                  d={MOTHER_OUTER_PATH}
+                  className="sakhimaa-stroke-mother-outer"
+                  stroke="#559C91"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d={MOTHER_INNER_PATH}
+                  className="sakhimaa-stroke-mother-inner"
+                  stroke="#559C91"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* Soft fill transition */}
+                <path
+                  d={`${MOTHER_OUTER_PATH} ${MOTHER_INNER_PATH}`}
+                  fillRule="evenodd"
+                  className="sakhimaa-fill-mother"
+                />
+              </g>
+
+              {/* Baby Figure (Soft Coral / Blush Rose) */}
+              <g className="baby-group">
+                {/* Outlines drawn sequentially */}
+                <path
+                  d={BABY_OUTER_PATH}
+                  className="sakhimaa-stroke-baby-outer"
+                  stroke="#E88B7A"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d={BABY_INNER_PATH}
+                  className="sakhimaa-stroke-baby-inner"
+                  stroke="#E88B7A"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* Soft fill transition */}
+                <path
+                  d={`${BABY_OUTER_PATH} ${BABY_INNER_PATH}`}
+                  fillRule="evenodd"
+                  className="sakhimaa-fill-baby"
+                />
+              </g>
+            </svg>
+
+            {/* Original crisp logo image cross-fading smoothly */}
+            <img
+              src="/logo.png"
+              alt="SakhiMaa Logo"
+              className="sakhimaa-original-logo-img"
+            />
+          </div>
+        </div>
+
+        {/* Brand Name "SakhiMaa" */}
+        <div className="sakhimaa-preloader-title">
+          <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-[#45362F] flex items-center justify-center">
+            SakhiMaa
+            <span className="sakhimaa-preloader-dot" aria-hidden="true" />
+          </h1>
+        </div>
+
+        {/* Brand Tagline */}
+        <div className="sakhimaa-preloader-tagline mt-2">
+          <p className="font-sans text-xs sm:text-sm font-medium text-[#705B51] tracking-wider uppercase">
+            Care for her. Care for them.
+          </p>
+        </div>
+
+        {/* Subtle Loading Progress Indicator */}
+        <div className="mt-7 flex flex-col items-center">
+          <div className="sakhimaa-preloader-track" aria-hidden="true">
+            <div className="sakhimaa-preloader-bar" />
+          </div>
+
+          {/* Reassuring Care Message */}
+          <div className="sakhimaa-preloader-status mt-3 flex items-center gap-1.5 text-xs text-[#9E8B81] font-medium tracking-wide">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#559C91]/70 animate-pulse" />
+            <span>Preparing your space of care...</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}

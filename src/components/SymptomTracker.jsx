@@ -137,19 +137,21 @@ export default function SymptomTracker({ initialJourney }) {
 
   return (
     <section
-      className="rounded-[24px] border border-[#EADFCF] bg-[#FFFDF9] p-5 shadow-sm sm:p-8"
+      className="rounded-[28px] border border-[#EADFCF] bg-[#FFFDF9] shadow-xl p-6 sm:p-9 md:p-10"
       aria-labelledby="symptom-tracker-title"
     >
       <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#D98F96]">Notice patterns, share with your care team</p>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#D98F96]">
+            {selectedJourney === 'postnatal' ? 'Postpartum Recovery & Healing' : 'Notice patterns, share with your care team'}
+          </p>
           <h1 id="symptom-tracker-title" className="font-serif text-2xl font-bold text-[#45362F] sm:text-3xl">
-            Symptom tracker
+            {selectedJourney === 'postnatal' ? "Mother's Recovery & Symptom Tracker" : 'Pregnancy Symptom Tracker'}
           </h1>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-end gap-3 max-w-lg">
           <p className="text-sm leading-relaxed text-[#705B51] flex-1">
-            Record how you feel over time, during pregnancy or postpartum. Your notes can help you prepare for a conversation with your care team.
+            Record how you feel over time, during {selectedJourney === 'postnatal' ? 'postpartum recovery' : 'pregnancy'}. Your notes can help you prepare for a conversation with your care team.
           </p>
           <div className="self-end shrink-0">
             <FeatureTip tip="Tracking symptoms regularly helps your clinician understand progression. If you experience warning signs like severe headache, vision changes, or intense abdominal pain, seek medical care right away." />

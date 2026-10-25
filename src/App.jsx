@@ -11,6 +11,7 @@ import GetStartedModal from './components/GetStartedModal';
 import Dashboard from './components/Dashboard';
 import MedicationTracker from './components/MedicationTracker';
 import SymptomTracker from './components/SymptomTracker';
+import Preloader from './components/Preloader';
 import { Check } from 'lucide-react';
 import { logout as apiLogout } from './api/auth';
 
@@ -83,6 +84,12 @@ export default function App() {
     useState('pregnant');
 
   const [toastMessage, setToastMessage] = useState(null);
+  const [showPreloader, setShowPreloader] = useState(true);
+
+  // Allow testing preloader manually from console if desired: window.testSakhiMaaPreloader()
+  useEffect(() => {
+    window.testSakhiMaaPreloader = () => setShowPreloader(true);
+  }, []);
 
   const showToast = (message) => {
     setToastMessage(message);
@@ -224,6 +231,10 @@ export default function App() {
   if (currentPage === 'dashboard') {
     return (
       <div className="relative">
+        {showPreloader && (
+          <Preloader onFinish={() => setShowPreloader(false)} />
+        )}
+
         {toastMessage && (
           <div className="fixed bottom-6 right-6 z-50 animate-fadeIn">
             <div className="bg-[#FFF9F1] border-2 border-[#EADFCF] rounded-2xl shadow-xl px-5 py-3.5 flex items-center gap-3 text-sm font-semibold text-[#45362F]">
@@ -248,6 +259,10 @@ export default function App() {
   // Landing page and tracker pages
   return (
     <div className="min-h-screen bg-[#F7F1E8] text-[#45362F] flex flex-col selection:bg-[#F4B49B]/30 selection:text-[#45362F] relative">
+      {showPreloader && (
+        <Preloader onFinish={() => setShowPreloader(false)} />
+      )}
+
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 animate-fadeIn">
           <div className="bg-[#FFF9F1] border-2 border-[#EADFCF] rounded-2xl shadow-xl px-5 py-3.5 flex items-center gap-3 text-sm font-semibold text-[#45362F]">

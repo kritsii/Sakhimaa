@@ -133,12 +133,7 @@ export default function HealthcareFeaturesGrid({
               </div>
 
               {/* Card Footer: Navigation Indicator */}
-              <div className="pt-4 mt-4 border-t border-[#EADFCF]/60 flex items-center justify-between text-xs font-semibold text-[#705B51] group-hover:text-[#45362F]">
-                <span className="flex items-center gap-1 text-[11px] font-medium text-[#705B51]/80">
-                  <span>Route:</span>
-                  <code className="bg-[#F2E8DC] px-1.5 py-0.5 rounded text-[10px] text-[#45362F]">{card.routeConstant}</code>
-                </span>
-
+              <div className="pt-4 mt-4 border-t border-[#EADFCF]/60 flex items-center justify-end text-xs font-semibold text-[#705B51] group-hover:text-[#45362F]">
                 <div className="inline-flex items-center gap-1.5 font-bold transition-transform group-hover:translate-x-1">
                   <span className={style.arrow}>Open Feature</span>
                   <ArrowRight className={`w-4 h-4 ${style.arrow}`} />
